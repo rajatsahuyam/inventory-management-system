@@ -1,0 +1,201 @@
+_schema-version: 3.3.0
+ID: InventoryManagementSystem
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: InventoryManagementSystem-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: InventoryManagementSystem-auth
+  - name: InventoryManagementSystem-db
+  - name: InventoryManagementSystem-messaging
+  - name: InventoryManagementSystem-connectivity
+  - name: InventoryManagementSystem-destination
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: InventoryManagementSystem-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: InventoryManagementSystem-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: InventoryManagementSystem
+  type: approuter.nodejs
+  path: app/router
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: InventoryManagementSystem-auth
+  - name: InventoryManagementSystem-destination
+  - name: InventoryManagementSystem-html5-runtime
+  - name: InventoryManagementSystem-portal
+  provides:
+  - name: app-api
+    properties:
+      app-protocol: ${protocol}
+      app-uri: ${default-uri}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: InventoryManagementSystem-app-deployer
+  type: com.sap.application.content
+  path: gen
+  requires:
+  - name: InventoryManagementSystem-auth
+  - name: srv-api
+  - name: InventoryManagementSystem-html5-repo-host
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+      content-target: true
+  build-parameters:
+    build-result: app/
+    requires:
+    - artifacts:
+      - inventorymanagementsystemgui.zip
+      name: inventorymanagementsystemgui
+      target-path: app/
+    - artifacts:
+      - project1.zip
+      name: project1
+      target-path: app/
+    - artifacts:
+      - inventorymanagementsystem.zip
+      name: inventorymanagementsystem
+      target-path: app/
+- name: InventoryManagementSystem-portal-deployer
+  type: com.sap.application.content
+  path: app/portal
+  requires:
+  - name: InventoryManagementSystem-portal
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: InventoryManagementSystem-portal-key
+  - name: InventoryManagementSystem-auth
+  - name: InventoryManagementSystem-html5-repo-host
+  - name: InventoryManagementSystem-app-deployer
+  deployed-after:
+  - InventoryManagementSystem-app-deployer
+- name: inventorymanagementsystemgui
+  type: html5
+  path: app/inventorymanagementsystemgui
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: project1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: inventorymanagementsystem
+  type: html5
+  path: app/inventorymanagementsystem
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: InventoryManagementSystem-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      oauth2-configuration:
+        credential-types:
+        - binding-secret
+        - x509
+        redirect-uris:
+        - https://*~{app-api/app-uri}/**
+      tenant-mode: dedicated
+      xsappname: InventoryManagementSystem-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+  processed-after:
+  - InventoryManagementSystem-messaging
+  requires:
+  - name: app-api
+- name: InventoryManagementSystem-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: InventoryManagementSystem-messaging
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./event-mesh.json
+    service: enterprise-messaging
+    service-plan: default
+- name: InventoryManagementSystem-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+- name: InventoryManagementSystem-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+    service: destination
+    service-plan: lite
+- name: InventoryManagementSystem-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: InventoryManagementSystem-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: InventoryManagementSystem-portal
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: portal
+    service-plan: standard
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production
