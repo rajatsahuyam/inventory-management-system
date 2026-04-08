@@ -12,17 +12,16 @@
     "@cap-js/sqlite": "^2",
     "@sap/cds-dk": "^9",
     "cds-plugin-ui5": "^0.13.6",
+    "eslint": "9.39.4",
     "mbt": "^1.2.29",
     "rimraf": "^5.0.5"
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-inventorymanagementsystemgui": "cds watch --open inventorymanagementsystemgui/index.html?sap-ui-xx-viewCache=false --livereload false",
     "undeploy": "cf undeploy InventoryManagementSystem --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-inventorymanagementsystem": "cds watch --open inventorymanagementsystem/index.html?sap-ui-xx-viewCache=false --livereload false",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-    "watch-project1": "cds watch --open project1/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-inventorymanagementsystem": "cds watch --open inventorymanagementsystem/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "deploy": "mbt build && cf deploy mta_archives/InventoryManagementSystem_1.0.0.mtar"
   },
   "private": true,
   "cds": {
@@ -30,16 +29,13 @@
       "[production]": {
         "auth": "xsuaa"
       },
-      "messaging": {
-        "kind": "enterprise-messaging"
-      },
       "launchpad": {
         "kind": "launchpad"
       },
       "connectivity": true,
       "destinations": true,
       "html5-repo": true,
-      "portal": true
+      "db": "hana"
     }
   },
   "workspaces": [

@@ -1,21 +1,9 @@
 {
-  "scopes": [
-    {
-      "name": "$XSAPPNAME.emcallback",
-      "description": "Enterprise-Messaging Callback Access",
-      "grant-as-authority-to-apps": [
-        "$XSSERVICENAME(InventoryManagementSystem-messaging)"
-      ]
-    },
-    {
-      "name": "$XSAPPNAME.emmanagement",
-      "description": "Enterprise-Messaging Management Access"
+    "xsappname": "InventoryManagementSystem",
+    "tenant-mode": "dedicated",
+    "scopes": [],
+    "role-templates": [],
+    "oauth2-configuration": {
+        "redirect-uris": ["https://*.hana.ondemand.com/**"]
     }
-  ],
-  "attributes": [],
-  "role-templates": [],
-  "authorities": [
-    "$XSAPPNAME.emmanagement",
-    "$XSAPPNAME.mtcallback"
-  ]
 }

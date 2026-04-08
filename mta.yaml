@@ -9,7 +9,6 @@ modules:
   requires:
   - name: InventoryManagementSystem-auth
   - name: InventoryManagementSystem-db
-  - name: InventoryManagementSystem-messaging
   - name: InventoryManagementSystem-connectivity
   - name: InventoryManagementSystem-destination
   provides:
@@ -41,7 +40,6 @@ modules:
   - name: InventoryManagementSystem-auth
   - name: InventoryManagementSystem-destination
   - name: InventoryManagementSystem-html5-runtime
-  - name: InventoryManagementSystem-portal
   provides:
   - name: app-api
     properties:
@@ -66,53 +64,9 @@ modules:
     build-result: app/
     requires:
     - artifacts:
-      - inventorymanagementsystemgui.zip
-      name: inventorymanagementsystemgui
-      target-path: app/
-    - artifacts:
-      - project1.zip
-      name: project1
-      target-path: app/
-    - artifacts:
       - inventorymanagementsystem.zip
       name: inventorymanagementsystem
       target-path: app/
-- name: InventoryManagementSystem-portal-deployer
-  type: com.sap.application.content
-  path: app/portal
-  requires:
-  - name: InventoryManagementSystem-portal
-    parameters:
-      content-target: true
-      service-key:
-        config:
-          content-endpoint: developer
-        name: InventoryManagementSystem-portal-key
-  - name: InventoryManagementSystem-auth
-  - name: InventoryManagementSystem-html5-repo-host
-  - name: InventoryManagementSystem-app-deployer
-  deployed-after:
-  - InventoryManagementSystem-app-deployer
-- name: inventorymanagementsystemgui
-  type: html5
-  path: app/inventorymanagementsystemgui
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: project1
-  type: html5
-  path: app/project1
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
 - name: inventorymanagementsystem
   type: html5
   path: app/inventorymanagementsystem
@@ -139,8 +93,6 @@ resources:
     path: ./xs-security.json
     service: xsuaa
     service-plan: application
-  processed-after:
-  - InventoryManagementSystem-messaging
   requires:
   - name: app-api
 - name: InventoryManagementSystem-db
@@ -148,12 +100,6 @@ resources:
   parameters:
     service: hana
     service-plan: hdi-shared
-- name: InventoryManagementSystem-messaging
-  type: org.cloudfoundry.managed-service
-  parameters:
-    path: ./event-mesh.json
-    service: enterprise-messaging
-    service-plan: default
 - name: InventoryManagementSystem-connectivity
   type: org.cloudfoundry.managed-service
   parameters:
@@ -163,7 +109,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -180,16 +126,14 @@ resources:
   parameters:
     service: html5-apps-repo
     service-plan: app-host
+    config:
+      HTML5Runtime_enabled: true
+      xsappname: InventoryManagementSystem
 - name: InventoryManagementSystem-html5-runtime
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
     service-plan: app-runtime
-- name: InventoryManagementSystem-portal
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: portal
-    service-plan: standard
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

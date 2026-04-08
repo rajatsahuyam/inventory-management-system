@@ -110,7 +110,7 @@
       "config": {},
       "routes": [
         {
-          "pattern": "Products:?query:",
+          "pattern": ":?query:",
           "name": "ProductsList",
           "target": "ProductsList"
         },
@@ -214,5 +214,8 @@
     "app": {
       "enableLazyLoading": true
     }
-  }
+  },
+  "sap.cloud": {
+    "service": "InventoryManagementSystem"
+}
 }
