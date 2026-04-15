@@ -3,5 +3,11 @@
   "src/gen/**/*.hdbindex",
   "src/gen/**/*.hdbconstraint",
   "src/gen/**/*_drafts.hdbtable",
-  "src/gen/**/*.hdbcalculationview"
+  "src/gen/**/*.hdbcalculationview",
+  "src/gen/data/inventory-Products.hdbtabledata",
+  "src/gen/data/inventory-Orders.hdbtabledata",
+  "src/gen/data/inventory-OrderItems.hdbtabledata",
+  "src/gen/data/inventory-Customers.hdbtabledata",
+  "src/gen/data/inventory-Suppliers.hdbtabledata",
+  "src/gen/data/inventory-Categories.hdbtabledata"
 ]

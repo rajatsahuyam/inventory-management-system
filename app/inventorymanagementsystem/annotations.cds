@@ -18,29 +18,20 @@ annotate service.Products with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'category_code',
                 Value: category_code,
             },
             {
                 $Type      : 'UI.DataField',
-                Label      : 'stockStatus',
                 Value      : stockStatus,
                 Criticality: criticality
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'criticalStock',
                 Value: criticalStock,
             },
         ],
     },
     UI.Facets                    : [
-        // {
-        //     $Type : 'UI.ReferenceFacet',
-        //     ID : 'GeneratedFacet1',
-        //     Label : 'General Information',
-        //     Target : '@UI.FieldGroup#GeneratedGroup',
-        // },
         {
             $Type : 'UI.ReferenceFacet',
             Label : 'Product Details',
@@ -58,42 +49,60 @@ annotate service.Products with @(
         }
     ],
     UI.FieldGroup #ProductDetails: {Data: [
-        {Value: name},
-        {Value: price},
-        {Value: category_code}
+        {Value: name, Label : 'Name',},
+        {Value: price, Label: 'Price'},
+        {Value: category_code, Label: 'Category Code'}
     ]},
     UI.FieldGroup #StockInfo     : {Data: [
-        {Value: stock},
-        {Value: criticalStock},
+        {Value: stock, Label: 'Stock'},
+        {Value: criticalStock, Label: 'Critical Stock'},
         {
             Value      : stockStatus,
+            Label: 'Stock Status',
             Criticality: criticality
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'service.restock',
+            Label : 'Restock',
         }
     ]},
-    UI.FieldGroup #SupplierInfo  : {Data: [{Value: supplier_ID}]},
+    UI.FieldGroup #SupplierInfo  : {Data: [
+        { Value: supplier_ID, Label: 'Supplier ID'},
+        { Value: supplier.name, Label: 'Name'},
+        {Value: supplier.rating, Label: 'Rating'}
+        ]},
     UI.LineItem                  : [
         {
             $Type: 'UI.DataField',
             Value: name,
+            Label: 'Name'
         },
         {
             $Type: 'UI.DataField',
             Value: price,
+            Label: 'Price'
         },
         {
             $Type: 'UI.DataField',
             Value: stock,
+            Label: 'Stock'
         },
         {
             $Type: 'UI.DataField',
-            Label: 'category_code',
+            Label: 'Category Code',
             Value: category_code,
         },
         {
             $Type      : 'UI.DataField',
-            Label      : 'stockStatus',
+            Label      : 'Stock Status',
             Value      : stockStatus,
             Criticality: criticality
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'service.restock',
+            Label : 'Restock',
         },
     ],
     UI.SelectionFields           : [
@@ -104,7 +113,7 @@ annotate service.Products with @(
         TypeName      : 'Product',
         TypeNamePlural: 'Products',
         Title         : {Value: name},
-        Description   : {Value: stockStatus}
+        Description   : {Value: category_code}
     },
     UI.HeaderFacets              : [{
         $Type : 'UI.ReferenceFacet',
@@ -132,15 +141,19 @@ annotate service.Products with {
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
+                LocalDataProperty: supplier_name,
                 ValueListProperty: 'name',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
+                LocalDataProperty: supplier_rating,
                 ValueListProperty: 'rating',
             },
         ],
-    }
+    };
+    supplier @Common.Text: supplier.name;
 };
+
 
 annotate service.Orders with @(
 
@@ -171,7 +184,7 @@ annotate service.Orders with @(
             $Type      : 'UI.DataField',
             Label      : 'Status',
             Value      : status,
-            Criticality: statusCriticality // we'll add this virtual field
+            Criticality: statusCriticality
         },
         {
             $Type: 'UI.DataField',
@@ -180,12 +193,17 @@ annotate service.Orders with @(
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action: 'InventoryService.approveOrder',
+            Action: 'service.approveOrder',
             Label : 'Approve Order',
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action: 'InventoryService.rejectOrder',
+            Action: 'service.completeOrder',
+            Label : 'Complete Order',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'service.rejectOrder',
             Label : 'Reject Order',
         },
     ],
@@ -224,18 +242,49 @@ annotate service.Orders with @(
             Value: modifiedAt,
             Label: 'Last Modified'
         },
-                {
+        {
             $Type : 'UI.DataFieldForAction',
-            Action: 'InventoryService.approveOrder',
+            Action: 'service.approveOrder',
             Label : 'Approve Order',
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action: 'InventoryService.rejectOrder',
+            Action: 'service.completeOrder',
+            Label : 'Complete Order',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'service.rejectOrder',
             Label : 'Reject Order',
         },
     ]},
 );
+
+annotate service.Orders with {
+    customer @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'Customers',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: customer_ID,
+                ValueListProperty: 'ID',
+            },
+            {
+                $Type            : 'Common.ValueListParameterOut',
+                LocalDataProperty: customer_name,
+                ValueListProperty: 'name',
+            },
+             {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: customer_email,
+                ValueListProperty: 'email',
+            }
+        ],
+        
+    };
+    customer @Common.Text: customer.name;
+};
 
 annotate service.OrderItems with @(UI.LineItem: [
     {
@@ -259,3 +308,77 @@ annotate service.OrderItems with @(UI.LineItem: [
         Value: price,
     },
 ]);
+
+annotate service.OrderItems with {
+ product @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        CollectionPath: 'Products',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: product_ID,
+                ValueListProperty: 'ID',
+            },
+            {
+                $Type            : 'Common.ValueListParameterOut',
+                LocalDataProperty: product_name,
+                ValueListProperty: 'name',
+            },
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: product_price,
+                ValueListProperty: 'price',
+            },
+        ],
+    };
+    product @Common.Text: product.name;
+};
+
+annotate service.Orders with {
+    totalAmount @Common.FieldControl: #ReadOnly;
+};
+annotate service.OrderItems with {
+    price @Common.FieldControl: #ReadOnly;
+};
+
+annotate service.Customers with @(
+    UI.HeaderInfo              : {
+        TypeName      : 'Customer',
+        TypeNamePlural: 'Customers',
+        Title         : {Value: name},
+        Description   : {Value: email}
+    },
+    UI.LineItem                : [
+        {
+            Value: name,
+            Label: 'Name'
+        },
+        {
+            Value: email,
+            Label: 'Email'
+        },
+        {
+            Value: orderCount,
+            Label: 'Total Orders'
+        },
+    ],
+    UI.FieldGroup #CustomerInfo: {Data: [
+        {
+            Value: name,
+            Label: 'Name'
+        },
+        {
+            Value: email,
+            Label: 'Email'
+        },
+        {
+            Value: orderCount,
+            Label: 'Orders Placed'
+        },
+    ]},
+    UI.Facets                  : [{
+        $Type : 'UI.ReferenceFacet',
+        Label : 'Customer Info',
+        Target: '@UI.FieldGroup#CustomerInfo'
+    }],
+);

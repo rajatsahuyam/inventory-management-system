@@ -34,8 +34,7 @@
       },
       "connectivity": true,
       "destinations": true,
-      "html5-repo": true,
-      "db": "hana"
+      "html5-repo": true
     }
   },
   "workspaces": [

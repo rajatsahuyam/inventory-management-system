@@ -1,2 +1,27 @@
 ##
 GET http://localhost:4004/odata/v4/inventory/Products
+
+### Approve Order
+POST http://localhost:4004/odata/v4/inventory/Orders(11111111-1111-1111-1111-111111111111)/InventoryService.approveOrder
+Content-Type: application/json
+
+{}
+
+### Restock Product
+POST http://localhost:4004/odata/v4/inventory/Products(11111111-1111-1111-1111-111111111111)/InventoryService.restock
+Content-Type: application/json
+
+{ "quantity": 10 }
+
+### Create Product
+POST http://localhost:4004/odata/v4/inventory/Products
+Content-Type: application/json
+
+{
+    "name": "Test Product",
+    "price": 1000,
+    "stock": 10,
+    "criticalStock": 5,
+    "category_code": "EL",
+    "supplier_ID": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+}

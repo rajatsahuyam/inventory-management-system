@@ -7,9 +7,9 @@ using {
 } from '@sap/cds/common';
 
 entity Products : cuid, managed {
-  name          : String @title: 'Product Name';
-  price         : Decimal(10,2) @assert.range: [0, 9999999] @title: 'Unit Price';
-  stock         : Integer @assert.range: [0, 99999] @title : 'Stock';
+  name          : String not null;
+  price         : Decimal(10,2) @assert.range: [0, 9999999] not null;
+  stock         : Integer @assert.range: [0, 99999] not null;
   category      : Association to Categories;
   supplier      : Association to Suppliers;
 
@@ -28,12 +28,13 @@ entity Suppliers : cuid, managed {
 }
 
 entity Customers : cuid, managed {
-  name      : String;
-  email     : String;
+  name      : String not null;
+  email     : String not null;
+  virtual orderCount : Integer;
 }
 
 entity Orders : cuid, managed {
-  customer       : Association to Customers;
+  customer       : Association to Customers not null;
 
   status         : String enum {
     New        = 'N';
@@ -53,7 +54,5 @@ entity OrderItems: cuid {
   quantity    : Integer;
   price       : Decimal(10,2);
 }
-
-
 
 

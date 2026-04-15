@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Inventory Management System</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: '72', Arial, sans-serif;
+            background: #f5f6f7;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #0070f2;
+            color: white;
+            padding: 0 2rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        h2 {
+            color: #32363a;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .tiles {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .tile {
+            background: white;
+            border: 1px solid #d9d9d9;
+            border-radius: 8px;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: #32363a;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .tile:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .tile-icon {
+            font-size: 3rem;
+        }
+
+        .tile-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .tile-subtitle {
+            font-size: 0.8rem;
+            color: #6a6d70;
+        }
+    </style>
+</head>
+
+<body>
+    <header>Inventory Management System</header>
+    <main>
+        <h2>Select an Application</h2>
+        <div class="tiles">
+            <a class="tile" href="./index.html#/Products">
+                <div class="tile-icon">📦</div>
+                <div class="tile-title">Products</div>
+                <div class="tile-subtitle">Manage Inventory</div>
+            </a>
+            <a class="tile" href="./index.html#/Orders">
+                <div class="tile-icon">🧾</div>
+                <div class="tile-title">Orders</div>
+                <div class="tile-subtitle">Manage Orders</div>
+            </a>
+            <a class="tile" href="./index.html#/Customers">
+                <div class="tile-icon">👥</div>
+                <div class="tile-title">Customers</div>
+                <div class="tile-subtitle">View Customers</div>
+            </a>
+        </div>
+    </main>
+</body>
+
+</html>

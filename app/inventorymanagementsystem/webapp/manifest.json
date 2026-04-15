@@ -27,23 +27,10 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "Products-manage": {
+        "Products-Create": {
           "semanticObject": "Products",
-          "action": "manage",
-          "title": "Products",
-          "subTitle": "Manage Inventory",
-          "icon": "sap-icon://product",
-          "signature": {
-            "parameters": {},
-            "additionalParameters": "allowed"
-          }
-        },
-        "Orders-manage": {
-          "semanticObject": "Orders",
-          "action": "manage",
-          "title": "Orders",
-          "subTitle": "Manage Orders",
-          "icon": "sap-icon://sales-order",
+          "action": "Create",
+          "title": "{{Products-Create.flpTitle}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -111,6 +98,11 @@
       "routes": [
         {
           "pattern": ":?query:",
+          "name": "Home",
+          "target": "ProductsList"
+        },
+        {
+          "pattern": "Products:?query:",
           "name": "ProductsList",
           "target": "ProductsList"
         },
@@ -128,6 +120,16 @@
           "pattern": "Orders({key}):?query:",
           "name": "OrdersObjectPage",
           "target": "OrdersObjectPage"
+        },
+        {
+          "pattern": "Customers:?query:",
+          "name": "CustomersList",
+          "target": "CustomersList"
+        },
+        {
+          "pattern": "Customers({key}):?query:",
+          "name": "CustomersObjectPage",
+          "target": "CustomersObjectPage"
         }
       ],
       "targets": {
@@ -202,6 +204,35 @@
               "editableHeaderContent": false
             }
           }
+        },
+        "CustomersList": {
+          "type": "Component",
+          "id": "CustomersList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Customers",
+              "variantManagement": "Page",
+              "navigation": {
+                "Customers": {
+                  "detail": {
+                    "route": "CustomersObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "CustomersObjectPage": {
+          "type": "Component",
+          "id": "CustomersObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Customers",
+              "editableHeaderContent": false
+            }
+          }
         }
       }
     }
@@ -217,5 +248,5 @@
   },
   "sap.cloud": {
     "service": "InventoryManagementSystem"
-}
+  }
 }
