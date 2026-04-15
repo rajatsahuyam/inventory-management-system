@@ -1,12 +1,12 @@
 sap.ui.define(
-    ["sap/fe/core/AppComponent"],
-    function (Component) {
+    ["sap/fe/core/AppComponent", "sap/ui/core/routing/History"],
+    function (AppComponent, History) {
         "use strict";
 
-        return Component.extend("inventorymanagementsystem.Component", {
+        return AppComponent.extend("inventorymanagementsystem.Component", {
             metadata: {
                 manifest: "json"
-            }
+            },
         });
     }
 );

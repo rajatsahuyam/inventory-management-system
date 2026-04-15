@@ -55,7 +55,6 @@ module.exports = cds.service.impl(async function () {
 
 
   this.before('SAVE', Orders, async (req) => {
-    console.log(req)
     if (req.data.status === 'A' || req.data.status === 'R') return;
 
     const items = req.data.items || [];
@@ -120,7 +119,7 @@ module.exports = cds.service.impl(async function () {
     const product = await SELECT.one.from(Products).where({ ID: item?.product_ID })
     const { quantity } = req
 
-    if (product) {
+    if (item && product && quantity) {
       await UPDATE(OrderItems.drafts)
         .set({ price: product.price * quantity })
         .where({ ID: req.ID });

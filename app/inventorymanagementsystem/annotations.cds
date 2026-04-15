@@ -48,6 +48,7 @@ annotate service.Products with @(
             Target: '@UI.FieldGroup#SupplierInfo'
         }
     ],
+    
     UI.FieldGroup #ProductDetails: {Data: [
         {Value: name, Label : 'Name',},
         {Value: price, Label: 'Price'},

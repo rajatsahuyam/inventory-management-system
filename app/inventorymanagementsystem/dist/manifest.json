@@ -67,6 +67,7 @@
 			"libs": {
 				"sap.m": {},
 				"sap.ui.core": {},
+				"sap.ushell": {},
 				"sap.fe.templates": {}
 			}
 		},
@@ -178,7 +179,17 @@
 					"options": {
 						"settings": {
 							"editableHeaderContent": false,
-							"contextPath": "/Products"
+							"contextPath": "/Products",
+							"content": {
+								"header": {
+									"actions": {
+										"Back": {
+											"press": ".extension.inventorymanagementsystem.ext.controller.ObjectPageExt.onProductBackPress",
+											"text": "Back"
+										}
+									}
+								}
+							}
 						}
 					}
 				},
@@ -214,7 +225,17 @@
 					"options": {
 						"settings": {
 							"contextPath": "/Orders",
-							"editableHeaderContent": false
+							"editableHeaderContent": false,
+							"content": {
+								"header": {
+									"actions": {
+										"Back": {
+											"press": ".extension.inventorymanagementsystem.ext.controller.ObjectPageExt.onOrderBackPress",
+											"text": "Back"
+										}
+									}
+								}
+							}
 						}
 					}
 				},
@@ -243,8 +264,27 @@
 					"options": {
 						"settings": {
 							"contextPath": "/Customers",
-							"editableHeaderContent": false
+							"editableHeaderContent": false,
+							"content": {
+								"header": {
+									"actions": {
+										"Back": {
+											"press": ".extension.inventorymanagementsystem.ext.controller.ObjectPageExt.onCustomerBackPress",
+											"text": "Back"
+										}
+									}
+								}
+							}
 						}
+					}
+				}
+			}
+		},
+		"extends": {
+			"extensions": {
+				"sap.ui.controllerExtensions": {
+					"sap.fe.templates.ObjectPage.ObjectPageController": {
+						"controllerName": "inventorymanagementsystem.ext.controller.ObjectPageExt"
 					}
 				}
 			}

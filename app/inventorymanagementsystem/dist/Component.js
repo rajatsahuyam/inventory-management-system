@@ -1,2 +1,2 @@
-sap.ui.define(["sap/fe/core/AppComponent"],function(e){"use strict";return e.extend("inventorymanagementsystem.Component",{metadata:{manifest:"json"}})});
+sap.ui.define(["sap/fe/core/AppComponent","sap/ui/core/routing/History"],function(e,n){"use strict";return e.extend("inventorymanagementsystem.Component",{metadata:{manifest:"json"}})});
 //# sourceMappingURL=Component.js.map
