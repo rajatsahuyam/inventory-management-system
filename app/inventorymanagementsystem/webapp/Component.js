@@ -1,6 +1,6 @@
 sap.ui.define(
-    ["sap/fe/core/AppComponent", "sap/ui/core/routing/History"],
-    function (AppComponent, History) {
+    ["sap/fe/core/AppComponent"],
+    function (AppComponent) {
         "use strict";
 
         return AppComponent.extend("inventorymanagementsystem.Component", {

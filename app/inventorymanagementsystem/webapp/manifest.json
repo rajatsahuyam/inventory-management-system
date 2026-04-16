@@ -27,10 +27,31 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "Products-Create": {
+        "Products-manage": {
           "semanticObject": "Products",
-          "action": "Create",
-          "title": "{{Products-Create.flpTitle}}",
+          "action": "manage",
+          "title": "{{Products-manage.flpTitle}}",
+          "subTitle": "Manage Inventory",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        },
+        "Orders-manage": {
+          "semanticObject": "Orders",
+          "action": "manage",
+          "title": "{{Orders-manage.flpTitle}}",
+          "subTitle": "Manage Orders",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        },
+        "Customers-manage": {
+          "semanticObject": "Customers",
+          "action": "manage",
+          "title": "{{Customers-manage.flpTitle}}",
+          "subTitle": "View Customers",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -252,7 +273,7 @@
             "settings": {
               "contextPath": "/Customers",
               "editableHeaderContent": false,
-               "content": {
+              "content": {
                 "header": {
                   "actions": {
                     "Back": {

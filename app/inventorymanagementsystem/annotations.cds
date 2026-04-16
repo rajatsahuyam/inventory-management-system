@@ -142,12 +142,10 @@ annotate service.Products with {
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                LocalDataProperty: supplier_name,
                 ValueListProperty: 'name',
             },
             {
                 $Type            : 'Common.ValueListParameterDisplayOnly',
-                LocalDataProperty: supplier_rating,
                 ValueListProperty: 'rating',
             },
         ],
@@ -272,13 +270,11 @@ annotate service.Orders with {
                 ValueListProperty: 'ID',
             },
             {
-                $Type            : 'Common.ValueListParameterOut',
-                LocalDataProperty: customer_name,
+                $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'name',
             },
              {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: customer_email,
+                $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'email',
             }
         ],
@@ -321,13 +317,11 @@ annotate service.OrderItems with {
                 ValueListProperty: 'ID',
             },
             {
-                $Type            : 'Common.ValueListParameterOut',
-                LocalDataProperty: product_name,
+                $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'name',
             },
             {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: product_price,
+                $Type            : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty: 'price',
             },
         ],

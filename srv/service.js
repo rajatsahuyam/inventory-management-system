@@ -25,12 +25,6 @@ module.exports = cds.service.impl(async function () {
     });
   });
 
-  this.before(['CREATE', 'UPDATE'], Products, (req) => {
-    if (req.data.stock < 0) {
-      req.error('Stock cannot be negative');
-    }
-  });
-
   // Prevent negative stock
   this.before(['CREATE', 'UPDATE'], Products, (req) => {
     if (req.data.stock < 0) {
