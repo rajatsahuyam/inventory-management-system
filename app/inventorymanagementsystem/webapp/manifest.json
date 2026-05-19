@@ -30,8 +30,9 @@
         "Products-manage": {
           "semanticObject": "Products",
           "action": "manage",
-          "title": "{{Products-manage.flpTitle}}",
+          "title": "Manage Products",
           "subTitle": "Manage Inventory",
+          "icon": "sap-icon://products",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -40,8 +41,9 @@
         "Orders-manage": {
           "semanticObject": "Orders",
           "action": "manage",
-          "title": "{{Orders-manage.flpTitle}}",
+          "title": "Manage Orders",
           "subTitle": "Manage Orders",
+          "icon": "sap-icon://orders",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -50,8 +52,9 @@
         "Customers-manage": {
           "semanticObject": "Customers",
           "action": "manage",
-          "title": "{{Customers-manage.flpTitle}}",
+          "title": "View Customers",
           "subTitle": "View Customers",
+          "icon": "sap-icon://customers",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -299,7 +302,9 @@
     }
   },
   "sap.fiori": {
-    "registrationIds": [],
+    "registrationIds": [
+      "F9999"
+    ],
     "archeType": "transactional"
   },
   "sap.fe": {
@@ -308,6 +313,7 @@
     }
   },
   "sap.cloud": {
+    "public": true,
     "service": "InventoryManagementSystem"
   }
 }

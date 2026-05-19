@@ -110,6 +110,7 @@ annotate service.Products with @(
         category_code,
         supplier_ID
     ],
+    
     UI.HeaderInfo                : {
         TypeName      : 'Product',
         TypeNamePlural: 'Products',
@@ -152,7 +153,6 @@ annotate service.Products with {
     };
     supplier @Common.Text: supplier.name;
 };
-
 
 annotate service.Orders with @(
 

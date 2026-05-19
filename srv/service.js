@@ -5,7 +5,7 @@ module.exports = cds.service.impl(async function () {
   const { Products, Orders, OrderItems } = this.entities;
 
   // Computed fields: stockStatus + criticality
-  this.after('READ', Products, (data) => {
+  this.after('GET', Products, (data) => {
     const rows = Array.isArray(data) ? data : [data];
 
 

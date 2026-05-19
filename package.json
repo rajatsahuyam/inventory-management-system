@@ -35,7 +35,8 @@
       },
       "connectivity": true,
       "destinations": true,
-      "html5-repo": true
+      "html5-repo": true,
+      "portal": true
     }
   },
   "workspaces": [

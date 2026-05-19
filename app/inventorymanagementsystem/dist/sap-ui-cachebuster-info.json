@@ -1,14 +1,14 @@
 {
-  "Component-preload.js.map": 1776284654663,
-  "Component.js": 1776280825580,
-  "manifest.json": 1776284447536,
+  "Component-preload.js.map": 1776661316017,
   "ext/controller/ObjectPageExt.controller.js": 1776284571904,
-  "Component-dbg.js": 1776280825580,
-  "Component.js.map": 1776284654564,
+  "manifest.json": 1776661268564,
+  "Component.js": 1776310564970,
+  "Component-dbg.js": 1776310564970,
+  "Component.js.map": 1776661315946,
   "ext/controller/ObjectPageExt-dbg.controller.js": 1776284571904,
-  "ext/controller/ObjectPageExt.controller.js.map": 1776284654594,
-  "Component-preload.js": 1776284654663,
-  "i18n/i18n.properties": 1776078381583,
+  "ext/controller/ObjectPageExt.controller.js.map": 1776661315950,
+  "Component-preload.js": 1776661316017,
+  "i18n/i18n.properties": 1776401394538,
   "launchpad.html": 1776066994343,
   "index.html": 1776077562427
 }
